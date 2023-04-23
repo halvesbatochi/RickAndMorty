@@ -65,7 +65,9 @@ final class RMCharacterListViewViewModel: NSObject {
         guard !isLoadingMoreCharacters else {
             return
         }
+        
         isLoadingMoreCharacters = true
+        
         guard let request = RMRequest(url: url) else {
             isLoadingMoreCharacters = false
             return
@@ -91,10 +93,12 @@ final class RMCharacterListViewViewModel: NSObject {
                 })
                 
                 strongSelf.characters.append(contentsOf: moreResults)
+                
                 DispatchQueue.main.async {
                     strongSelf.delegate?.didLoadMoreCharacters(
                         with: indexPathToAdd
                     )
+                    
                     strongSelf.isLoadingMoreCharacters = false
                 }
                 
