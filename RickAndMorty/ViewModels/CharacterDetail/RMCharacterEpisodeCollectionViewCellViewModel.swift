@@ -54,6 +54,8 @@ final class RMCharacterEpisodeCollectionViewCellViewModel {
             return
         }
         
+        isFetching = true
+        
         RMService.shared.execute(request,
                                  expecting: RMEpisode.self) { [weak self] result in
             switch result {
@@ -61,9 +63,8 @@ final class RMCharacterEpisodeCollectionViewCellViewModel {
                 DispatchQueue.main.async {
                     self?.episode = model
                 }
-                self?.episode = model
             case .failure(let failure):
-                break
+                print(String(describing: failure))
             }
         }
     }
