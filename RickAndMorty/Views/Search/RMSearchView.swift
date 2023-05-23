@@ -23,6 +23,8 @@ final class RMSearchView: UIView {
     
     private let noResultsView = RMNoSearchResultsView()
     
+    private let resultsView = RMSearchResultsView()
+    
     // Results collectionView
     
     // MARK: - Init
@@ -32,7 +34,7 @@ final class RMSearchView: UIView {
         super.init(frame: frame)
         backgroundColor = .systemBackground
         translatesAutoresizingMaskIntoConstraints = false
-        addSubviews(noResultsView, searchInputView)
+        addSubviews(resultsView, noResultsView, searchInputView)
         addConstraints()
         
         searchInputView.configure(with: RMSearchInputViewViewModel(type: viewModel.config.type))
@@ -42,13 +44,28 @@ final class RMSearchView: UIView {
             self.searchInputView.update(option: tuple.0, value: tuple.1)
         }
         
-        viewModel.registerSearchResultHandler { results in
-            print(results)
-        }
+        setUpHandlers(viewModel: viewModel)
     }
     
     required init?(coder: NSCoder) {
         fatalError("Unsupported")
+    }
+    
+    private func setUpHandlers(viewModel: RMSearchViewViewModel) {
+        viewModel.registerSearchResultHandler { [weak self] results in
+            DispatchQueue.main.async {
+                self?.resultsView.configure(with: results)
+                self?.noResultsView.isHidden = true
+                self?.resultsView.isHidden = false
+            }
+        }
+        
+        viewModel.registerNoResultsHandler { [weak self] in
+            DispatchQueue.main.async {
+                self?.noResultsView.isHidden = false
+                self?.resultsView.isHidden = true
+            }
+        }
     }
     
     private func addConstraints() {
@@ -62,6 +79,12 @@ final class RMSearchView: UIView {
             noResultsView.heightAnchor.constraint(equalToConstant: 150),
             noResultsView.centerXAnchor.constraint(equalTo: centerXAnchor),
             noResultsView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            resultsView.topAnchor.constraint(equalTo: searchInputView.bottomAnchor),
+            resultsView.leftAnchor.constraint(equalTo: leftAnchor),
+            resultsView.rightAnchor.constraint(equalTo: rightAnchor),
+            resultsView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
         ])
     }
     
