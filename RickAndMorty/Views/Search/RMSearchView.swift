@@ -55,9 +55,9 @@ final class RMSearchView: UIView {
     }
     
     private func setUpHandlers(viewModel: RMSearchViewViewModel) {
-        viewModel.registerSearchResultHandler { [weak self] results in
+        viewModel.registerSearchResultHandler { [weak self] result in
             DispatchQueue.main.async {
-                self?.resultsView.configure(with: results)
+                self?.resultsView.configure(with: result)
                 self?.noResultsView.isHidden = true
                 self?.resultsView.isHidden = false
             }
