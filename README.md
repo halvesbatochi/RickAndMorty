@@ -1,9 +1,9 @@
 # RickAndMorty
 > Aplicativo para desenvolvimento Swift/iOS em ViewCode
 
-Projeto criado utilizando UIKit e SwiftUI no mesmo projeto
-Integrado com uma API real do Rick and Morty
-Utilizado arquitetura MVVM
+Projeto criado utilizando UIKit e SwiftUI no mesmo projeto <br />
+Integrado com uma API real do Rick and Morty <br />
+Utilizado arquitetura MVVM <br />
 
 
 
