@@ -277,8 +277,6 @@ extension RMSearchResultsView: UIScrollViewDelegate {
                         
                         strongSelf.tableView.tableFooterView = nil
                         
-                        let originalResults = strongSelf.collectionViewCellViewModels
-
                         let originalCount = strongSelf.collectionViewCellViewModels.count
                         let newCount = (newResults.count - originalCount)
                         let total = originalCount + newCount
